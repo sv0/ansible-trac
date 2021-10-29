@@ -1,0 +1,11 @@
+---
+galaxy_info:
+  author: Slavik Svyrydiuk
+  description: Install Trac, an enhanced wiki and issue tracking system
+  license: GNU General Public License v2
+  min_ansible_version: 2.11
+  platforms:
+    - name: Debian
+      versions:
+        - buster
+        - bullseye
