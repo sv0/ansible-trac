@@ -1,0 +1,6 @@
+---
+- name: reload trac
+  systemd:
+    state: restarted
+    daemon_reload: true
+    name: tracd

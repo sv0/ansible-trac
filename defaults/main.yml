@@ -1,0 +1,35 @@
+---
+# Domain which will be used to host the trac instance if not overwritten in
+# the project configuration.
+trac_domain: ''
+
+trac_hostname: 127.0.0.1
+trac_port: 8001
+
+# List of IP addresses or CIDR subnets which will be allowed to connect to the
+# server in ``ip(6)tables``. If it's empty, all remote connections are allowed.
+trac_accept: []
+
+# List of supported version control systems. Possible values are:
+# ``git``, ``mercurial``, ``bzr`` (Subversion is always supported)
+trac_vcs:
+  - 'git'
+
+# List of supported trac plugins. Run ``apt-cache search ^trac-`` for a
+# complete list of supported plugins.
+trac_plugins: []
+
+# Configuration list of trac projects to setup.
+trac_projects: []
+
+# trac default system user account
+trac_default_user: 'trac'
+
+# trac default system user group
+trac_default_group: 'trac'
+
+# root directory for trac projects
+trac_project_root: '{{ ansible_local.root.srv + "/trac" }}'
+
+trac_auth_standalone: true
+trac_users: []

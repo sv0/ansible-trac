@@ -1,0 +1,25 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description=Trac Instance
+Documentation=man:tracd(1)
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/tracd \
+    --pidfile=/run/tracd.pid \
+    --protocol=http \
+    --hostname {{ trac_hostname }} \
+    --port {{ trac_port }} \
+    --user={{ trac_default_user }} \
+    --group={{ trac_default_group }} \
+    --env-parent-dir={{ trac_project_root }} \
+    {% if trac_auth_standalone %}
+    --basic-auth="*,{{ trac_project_root }}/.htpasswd,{{ trac_domain }}" \
+    {% endif -%}
+    --daemonize
+PIDFile=/run/tracd.pid
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
