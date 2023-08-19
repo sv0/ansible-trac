@@ -1,0 +1,49 @@
+---
+- name: Install Trac base packages
+  package:
+    name:
+      - trac
+      - python3-passlib
+    state: present
+    install_recommends: false
+
+- name: Create project directory
+  file:
+    path: '{{ trac_project_root }}'
+    owner: '{{ trac_default_user }}'
+    group: '{{ trac_default_group }}'
+    mode: '0750'
+    state: directory
+
+- name: Create trac users
+  htpasswd:
+    path: '{{ trac_project_root }}/.htpasswd'
+    username: '{{ item.username }}'
+    password: '{{ item.password }}'
+    owner: root
+    group: '{{ item.group | default(trac_default_group) }}'
+    mode: '0640'
+  with_items: '{{ trac_users }}'
+
+- name: Create project directory
+  file:
+    path: '{{ trac_project_root }}/{{ item.name }}'
+    owner: '{{ item.user | default(trac_default_user) }}'
+    group: '{{ item.group | default(trac_default_group) }}'
+    mode: '0750'
+    state: directory
+  with_items: '{{ trac_projects }}'
+
+- name: Create systemd service
+  template:
+    src: 'tracd.service.j2'
+    dest: '/etc/systemd/system/tracd.service'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  notify: Reload systemd
+
+- name: Enable systemd service
+  service:
+    name: tracd
+    enabled: true
