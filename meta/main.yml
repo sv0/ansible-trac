@@ -1,9 +1,11 @@
 ---
 galaxy_info:
-  author: Slavik Svyrydiuk
+  role_name: trac
+  namespace: sv0
+  author: slavik@svyrydiuk.eu
   description: Install Trac, an enhanced wiki and issue tracking system
   license: GNU General Public License v2
-  min_ansible_version: 2.12
+  min_ansible_version: "2.12"
   platforms:
     - name: Debian
       versions:
